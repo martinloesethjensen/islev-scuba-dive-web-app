@@ -12,6 +12,25 @@
 <form method="post">
     <input class="btn btn-primary" type="submit" placeholder="Tilmeld"/>
 </form>
+
+<iframe src="https://calendar.google.com/calendar/embed?src=twigg300%40gmail.com&ctz=Europe%2FAmsterdam"
+        style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+
+  $.ajax({
+    method: "get",
+    url: "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+    data: {
+      q: "hej",
+      key: "AIzaSyBLPy4Ib4FVYwoiFrTi8b74y5l7xVNtz10",
+    },
+    success: function (resp) {
+      console.log(resp);
+    }
+
+  });
+</script>
 </body>
 </html>
