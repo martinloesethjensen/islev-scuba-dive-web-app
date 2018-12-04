@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Islev Scuba | Login</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/custom.css">
+</head>
+<body>
+    <div id="signin-form" class="card">
+        <form method="post" th:action="@{/login}">
+            <div class="card-header">
+                Log Ind
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                    Invalid username and password.
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input name="username" id="email" type="email" required class="form-control" placeholder="Indtast email..." value="admin@admin.dk" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Adgangskode:</label>
+                    <input name="password" id="password" type="password" required class="form-control" placeholder="Indtast adgangskode..." value="admin" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-block btn-lg" value="Log Ind" />
+                </div>
+                <div class="form-group">
+                    <a href="/register" class="btn btn-link btn-block btn-lg">Opret ny bruger</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

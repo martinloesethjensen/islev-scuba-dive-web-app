@@ -14,10 +14,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,39 +34,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     SessionRepository sessionRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/student/*").access("hasAnyAuthority('ROLE_MEMBER')")
+                .antMatchers("/member/*").access("hasAnyAuthority('ROLE_MEMBER')")
                 .antMatchers("/admin/*").access("hasAnyAuthority('ROLE_ADMIN')")
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login", "/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").successHandler(new AuthenticationSuccessHandler() {
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-                for(GrantedAuthority grantedAuthority: authorities) {
-                    if (grantedAuthority.getAuthority().equals("ROLE_MEMBER")) {
-                        Integer sessionId = sessionRepository.findByUsernameEquals(((UserDetails) authentication.getPrincipal()).getUsername()).getId();
-                        myId = (sessionRepository.findByIdEquals(sessionId)).getId();
-                        prefix = "/member";
-                        httpServletResponse.sendRedirect("/member/");
-                    } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
-                        Integer sessionId = sessionRepository.findByUsernameEquals(((UserDetails)authentication.getPrincipal()).getUsername()).getId();
-                        myId = (sessionRepository.findByIdEquals(sessionId)).getId();
-                        prefix = "/admin";
-                        httpServletResponse.sendRedirect("/admin/");
+                        for(GrantedAuthority grantedAuthority: authorities) {
+                            if (grantedAuthority.getAuthority().equals("ROLE_MEMBER")) {
+                                Integer sessionId = sessionRepository.findByUsernameEquals(((UserDetails) authentication.getPrincipal()).getUsername()).getId();
+                                myId = (sessionRepository.findByIdEquals(sessionId)).getId();
+                                prefix = "/member";
+                                httpServletResponse.sendRedirect("/member/");
+                            } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+                                Integer sessionId = sessionRepository.findByUsernameEquals(((UserDetails)authentication.getPrincipal()).getUsername()).getId();
+                                myId = (sessionRepository.findByIdEquals(sessionId)).getId();
+                                prefix = "/admin";
+                                httpServletResponse.sendRedirect("/admin/");
+                            }
+                        }
                     }
-                }
-            }
-        })
+                })
                 .permitAll()
                 .and()
                 .logout()
@@ -85,17 +80,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         int i = 0;
 
         for(Session session: _tempSessions) {
-            Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-            auths.add(new SimpleGrantedAuthority("ROLE_"+session.getRole()));
-            users[i] = new User(session.getUsername(), passwordEncoder.encode(session.getUsername()), auths);
+            users[i] = User.withUsername(session.getUsername()).password("{noop}"+session.getPassword()).roles(session.getRole()).build();
             i++;
         }
 
         return new InMemoryUserDetailsManager(users);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
