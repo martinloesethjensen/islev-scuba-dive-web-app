@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="islev-web-application-3rd-semester-examproject" options="-parameters" />
+      <module name="islev-web-application-3rd-semester-examproject" options="" />
     </option>
   </component>
 </project>
