@@ -73,8 +73,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-
-        // TODO: When logging out redirect to --> /login?logout
     }
 
     @Bean
