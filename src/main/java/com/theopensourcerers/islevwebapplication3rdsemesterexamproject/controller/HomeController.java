@@ -25,4 +25,8 @@ public class HomeController {
 	    return "login";
     }
 
+    @GetMapping("/register")
+	public String registerView() {
+		return "createMember";
+	}
 }

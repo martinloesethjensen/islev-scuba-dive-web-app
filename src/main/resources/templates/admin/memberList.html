@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+</head>
+<body>
+    <div th:replace="/admin/includes/menu::menu"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-success" role="alert" th:if="${success}">
+                            Handlingen blev udført!
+                        </div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Navn</th>
+                                <th>Postnummer</th>
+                                <th>By</th>
+                                <th>Handlinger</th>
+                            </tr>
+                            <tr th:each="member: ${members}">
+                                <td th:text="${member.id}"></td>
+                                <td th:text="${member.firstname+' '+member.lastname}"></td>
+                                <td th:text="${member.zipcode}"></td>
+                                <td th:text="${member.city}"></td>
+                                <td>
+                                    <a th:href="${'/admin/members/edit/'+member.id}" class="btn btn-primary btn-sm">Rediger</a>
+                                    <button th:attr="data-id=${member.id}" class="trigger-delete btn btn-danger btn-sm">Slet</button>
+                                </td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(".trigger-delete").click(function () {
+            var id = $(this).data("id");
+
+            if(confirm("Er du sikker på du vil slette dette medlem?")) {
+                $.ajax({
+                    url: "/api/member/delete",
+                    method: "DELETE",
+                    data: {id: id},
+                    success: function (resp) {
+                        window.location.href = "/admin/members/";
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

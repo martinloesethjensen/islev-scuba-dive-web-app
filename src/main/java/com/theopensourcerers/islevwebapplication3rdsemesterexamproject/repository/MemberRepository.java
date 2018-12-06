@@ -4,4 +4,5 @@ import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.base.Memb
 import org.springframework.data.repository.CrudRepository;
 
 public interface MemberRepository extends CrudRepository<Member, Integer> {
+    Member findByIdEquals(Integer id);
 }

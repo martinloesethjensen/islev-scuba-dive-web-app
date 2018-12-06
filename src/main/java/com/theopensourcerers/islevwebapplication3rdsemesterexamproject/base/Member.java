@@ -1,9 +1,6 @@
 package com.theopensourcerers.islevwebapplication3rdsemesterexamproject.base;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Member {
@@ -12,10 +9,14 @@ public class Member {
     private int id;
     private String firstname;
     private String lastname;
-    private String tlfnumber;
+    private String phone;
     private String address;
+    private String zipcode;
+    private String city;
     private String certificateNumber;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "session_id")
+    private Session session;
 
     public Member() {
     }
@@ -44,12 +45,12 @@ public class Member {
         this.lastname = lastname;
     }
 
-    public String getTlfnumber() {
-        return tlfnumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTlfnumber(String tlfnumber) {
-        this.tlfnumber = tlfnumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAddress() {
@@ -60,11 +61,35 @@ public class Member {
         this.address = address;
     }
 
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getCertificateNumber() {
         return certificateNumber;
     }
 
     public void setCertificateNumber(String certificateNumber) {
         this.certificateNumber = certificateNumber;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }
