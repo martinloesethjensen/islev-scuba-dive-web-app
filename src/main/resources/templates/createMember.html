@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opret medlem</title>
@@ -8,19 +8,168 @@
     <link href="../css/bootstrap-reboot.css" rel="stylesheet">
     <script src="../js/bootstrap.js"></script>
     <script src="../js/bootstrap.bundle.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <body>
 
 <div class="row">
-
     <div class="col-2"></div>
     <div class="col-8">
 
+
+        <div class="card">
+            <div class="card-body">
+
+                <p class="card-text">
+                <form id="formID">
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Navn</span>
+                                </div>
+                                <input th:field="${member.firstname}" type="text"
+                                       class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Efternavn</span>
+                                </div>
+                                <input th:field="${member.lastname}" type="text"
+                                       class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Tlf. nummer</span>
+                                </div>
+                                <input th:field="${member.phone}" type="text" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Addresse</span>
+                                </div>
+                                <input th:field="${member.address}" type="text" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Postnummber</span>
+                                </div>
+                                <input th:field="${member.zipcode}" type="number"
+                                       class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">By</span>
+                                </div>
+                                <input th:field="${member.city}" type="text" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Certifikat nummer</span>
+                                </div>
+                                <input th:field="${member.certificateNumber}" type="text"
+                                       class="form-control" aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Email</span>
+                                </div>
+                                <input th:field="${session.username}" type="text"
+                                       class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Kodeord </span>
+                                </div>
+                                <input th:field="${session.password}" type="text"
+                                       class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </p>
+
+                <button class="btn btn-danger">Tilbage</button>
+                <button class=" btn btn-success float-right" id="saveBtn">Gem</button>
+
+            </div>
+        </div>
     </div>
     <div class="col-2"></div>
 
 </div>
 
+<script>
+  $("#saveBtn").click(function () {
+    $.ajax({
+      url: '/../api/member/create',
+      type: 'post',
+      data: $("#formID").serialize(),
+      error: function (err) {
+        console.log(err.responseText);
+      },
+      success: function (options) {
+        console.log(options);
+        window.location.href = "/";
 
+      }
+    });
+  });
+
+</script>
 </body>
+
+
 </html>
