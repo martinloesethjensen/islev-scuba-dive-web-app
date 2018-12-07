@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class AdminController {
@@ -24,6 +25,14 @@ public class AdminController {
         model.addAttribute("success", success);
         success = false;
         return "/admin/memberList";
+    }
+
+    @GetMapping("/admin/members/edit/{id}")
+    public String updateMember(Model model,
+                             @PathVariable("id") Integer id){
+        model.addAttribute("member", memberRepository.findByIdEquals(id));
+
+        return "/admin/updateMember";
     }
 
 }
