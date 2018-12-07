@@ -22,15 +22,15 @@ public class MemberAPI {
     @GetMapping("list")
     public ResponseEntity list() { return new ResponseEntity<>(memberRepository.findAll(), HttpStatus.OK); }
 
-    @PostMapping("create")
-    public ResponseEntity create(Member member) {
-        if (member == null)
-            return new ResponseEntity<>("Member not created", HttpStatus.NOT_IMPLEMENTED);
-        System.out.println(member);
-        memberRepository.save(member);
+    //    TODO: validate postal code and phone number.
+	@PostMapping("create")
+	public ResponseEntity create(Member member) {
+		if (member == null)
+			return new ResponseEntity<>("Member not created", HttpStatus.NOT_IMPLEMENTED);
+		memberRepository.save(member);
 
-        return new ResponseEntity<>(String.format("Member %s Created", member), HttpStatus.OK);
-    }
+		return new ResponseEntity<>(String.format("Member %s Created", member), HttpStatus.OK);
+	}
 
     @PutMapping("edit")
     public ResponseEntity update(Member member) {
