@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/custom.css">
+</head>
+<body>
+<div th:replace="/member/includes/menu::menu"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Mine Informationer</h2>
+                    <div class="alert alert-success" role="alert" th:if="${success}">
+                        Handlingen blev udført!
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p th:utext="'<b>Fornavn:<br></b>'+${info.firstname}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p th:utext="'<b>Efternavn:<br></b>'+${info.lastname}"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p th:utext="'<b>Adresse:<br></b>'+${info.address}"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p th:utext="'<b>Postnummer:<br></b>'+${info.zipcode}"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p th:utext="'<b>By:<br></b>'+${info.city}"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p th:utext="'<b>Telefonnummer:<br></b>'+${info.phone}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p th:utext="'<b>Dykker Certifikat Nummer:<br></b>'+${info.certificateNumber}"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p th:utext="'<b>Email (Brugernavn):<br></b>'+${info.session.username}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p th:utext="'<b>Adgangskode:<br></b><i>Skjult</i>'"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="/member/my-information/edit" class="btn btn-primary float-right">Rediger infomationer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

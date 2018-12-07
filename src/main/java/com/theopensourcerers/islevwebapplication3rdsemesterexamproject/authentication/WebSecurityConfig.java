@@ -28,7 +28,7 @@ import java.util.List;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static String prefix = "";
-    private static int myId = 0;
+    public static int myId = 0;
 
     @Autowired
     SessionRepository sessionRepository;
