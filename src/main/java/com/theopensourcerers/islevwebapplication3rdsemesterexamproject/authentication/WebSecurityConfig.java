@@ -28,7 +28,8 @@ import java.util.List;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static String prefix = "";
-    public static int myId = 0;
+    private static int myId = 0;
+    private static boolean isLoggedIn = false;
 
     @Autowired
     SessionRepository sessionRepository;
@@ -40,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/member/*").access("hasAnyAuthority('ROLE_MEMBER')")
                 .antMatchers("/admin/*").access("hasAnyAuthority('ROLE_ADMIN')")
-                .antMatchers("/login", "/css/**", "/js/**", "/img/**", "/register", "/api/**", "/").permitAll()
+                .antMatchers("/login", "/css/**", "/js/**", "/img/**", "/register", "/api/**", "/", "/courses/", "/about").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -54,11 +55,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 Integer sessionId = sessionRepository.findByUsernameEquals(((UserDetails) authentication.getPrincipal()).getUsername()).getId();
                                 myId = (sessionRepository.findByIdEquals(sessionId)).getId();
                                 prefix = "/member";
+                                isLoggedIn = true;
                                 httpServletResponse.sendRedirect("/member/");
                             } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                                 Integer sessionId = sessionRepository.findByUsernameEquals(((UserDetails)authentication.getPrincipal()).getUsername()).getId();
                                 myId = (sessionRepository.findByIdEquals(sessionId)).getId();
                                 prefix = "/admin";
+	                            isLoggedIn = true;
                                 httpServletResponse.sendRedirect("/admin/");
                             }
                         }
@@ -86,4 +89,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         return new InMemoryUserDetailsManager(users);
     }
+
+    public static String getPrefixURL() {
+        return prefix;
+    }
+
+    public static int getMyId() { return myId; }
+
+	public static boolean isLoggedIn() { return isLoggedIn; }
 }

@@ -65,7 +65,7 @@ public class MemberAPI {
         if (member == null)
             return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
 
-        Member memberSave = memberRepository.findBySessionId(WebSecurityConfig.myId);
+        Member memberSave = memberRepository.findBySessionId(WebSecurityConfig.getMyId());
         memberSave.setFirstname(member.getFirstname());
         memberSave.setLastname(member.getLastname());
         memberSave.setAddress(member.getAddress());
