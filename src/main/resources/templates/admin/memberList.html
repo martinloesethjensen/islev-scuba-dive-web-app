@@ -47,13 +47,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         $(".trigger-delete").click(function () {
-            var id = $(this).data("id");
-
             if(confirm("Er du sikker på du vil slette dette medlem?")) {
                 $.ajax({
                     url: "/api/member/delete",
                     method: "DELETE",
-                    data: {id: id},
+                    data: {id: $(this).data("id")},
                     success: function (resp) {
                         window.location.href = "/admin/members/";
                     },
