@@ -37,7 +37,8 @@ public class MemberAPI {
         if (member == null)
             return new ResponseEntity<>("Member not updated", HttpStatus.NOT_IMPLEMENTED);
 
-        memberRepository.save(member);
+	    member.getSession().setRole("MEMBER");
+	    memberRepository.save(member);
 
         return new ResponseEntity<>(String.format("Member %s Updated", member), HttpStatus.OK);
     }
