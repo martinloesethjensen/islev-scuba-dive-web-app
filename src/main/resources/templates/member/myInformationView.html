@@ -15,6 +15,9 @@
             <div class="card">
                 <div class="card-body">
                     <h2>Mine Informationer</h2>
+                    <div class="alert alert-success" role="alert" th:if="${success}">
+                        Handlingen blev udført!
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <p th:utext="'<b>Fornavn:<br></b>'+${info.firstname}"></p>

@@ -1,8 +1,11 @@
 
 package com.theopensourcerers.islevwebapplication3rdsemesterexamproject.api;
 
+import com.google.api.Http;
+import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.authentication.WebSecurityConfig;
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.base.Member;
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.controller.AdminController;
+import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.controller.MemberController;
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +37,7 @@ public class MemberAPI {
 	}
 
     @PutMapping("edit")
-    public ResponseEntity update(Member member) {
+    public ResponseEntity edit(Member member) {
         if (member == null)
             return new ResponseEntity<>("Member not updated", HttpStatus.NOT_IMPLEMENTED);
 
@@ -54,5 +57,27 @@ public class MemberAPI {
         AdminController.success = true;
 
         return new ResponseEntity<>(String.format("Member %s Deleted", member), HttpStatus.OK);
+    }
+
+    @PutMapping("update")
+    public ResponseEntity update(Member member) {
+        if (member == null)
+            return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
+
+        Member memberSave = memberRepository.findBySessionId(WebSecurityConfig.myId);
+        memberSave.setFirstname(member.getFirstname());
+        memberSave.setLastname(member.getLastname());
+        memberSave.setAddress(member.getAddress());
+        memberSave.setPhone(member.getPhone());
+        memberSave.setCity(member.getCity());
+        memberSave.setCertificateNumber(member.getCertificateNumber());
+        memberSave.setZipcode(member.getZipcode());
+        memberSave.getSession().setUsername(member.getSession().getUsername());
+        if(!member.getSession().getPassword().equals("")) memberSave.getSession().setPassword(member.getSession().getPassword());
+        memberRepository.save(memberSave);
+
+        MemberController.success = true;
+
+        return new ResponseEntity<>(String.format("Member %s Updated", member), HttpStatus.OK);
     }
 }
