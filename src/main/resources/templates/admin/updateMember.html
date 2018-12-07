@@ -101,21 +101,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email (Brugernavn):</label>
-                            <input aria-describedby="inputGroup-sizing-default" id="email"
-                                       class="form-control"
-                                       aria-label="Sizing example input"
-                                       th:field="${member.session.username}"
-                                       type="email">
+                            <input aria-describedby="inputGroup-sizing-default" id="email" readonly
+                                   class="form-control"
+                                   aria-label="Sizing example input"
+                                   th:field="${member.session.username}"
+                                   type="email">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">Ny Adgangskode:</label>
                             <input aria-describedby="inputGroup-sizing-default" id="password"
-                                       class="form-control"
-                                       aria-label="Sizing example input"
-                                       th:field="${member.session.password}"
-                                       type="password">
+                                   class="form-control"
+                                   aria-label="Sizing example input"
+                                   th:field="${member.session.password}"
+                                   hidden="hidden" type="text">
                         </div>
                     </div>
                 </div>
