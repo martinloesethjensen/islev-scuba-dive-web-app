@@ -1,7 +1,6 @@
 package com.theopensourcerers.islevwebapplication3rdsemesterexamproject.controller;
 
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.authentication.WebSecurityConfig;
-import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.base.Member;
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +21,12 @@ public class MemberController {
     @GetMapping("/member/my-information")
     public String myInformatonView(Model model) {
         model.addAttribute("info", memberRepository.findBySessionId(WebSecurityConfig.myId));
-        return "member/myInformation";
+        return "myInformationView";
     }
 
     @GetMapping("/member/my-information/edit")
     public String myInformatonEdit(Model model) {
         model.addAttribute("info", memberRepository.findBySessionId(WebSecurityConfig.myId));
-        return "member/myInformation";
+        return "myInformationView";
     }
 }
