@@ -44,6 +44,8 @@ public class MemberAPI {
 	    member.getSession().setRole("MEMBER");
 	    memberRepository.save(member);
 
+	    MemberController.success = true;
+
         return new ResponseEntity<>(String.format("Member %s Updated", member), HttpStatus.OK);
     }
 
