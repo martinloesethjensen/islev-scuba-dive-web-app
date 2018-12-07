@@ -28,7 +28,7 @@ import java.util.List;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static String prefix = "";
-    private static int myId = 0;
+    public static int myId = 0;
 
     @Autowired
     SessionRepository sessionRepository;
@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/member/*").access("hasAnyAuthority('ROLE_MEMBER')")
                 .antMatchers("/admin/*").access("hasAnyAuthority('ROLE_ADMIN')")
-                .antMatchers("/login", "/css/**", "/register", "/api/*").permitAll()
+                .antMatchers("/login", "/css/**", "/register", "/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
