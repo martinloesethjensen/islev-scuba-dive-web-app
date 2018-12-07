@@ -20,7 +20,7 @@ public class MemberAPI {
     public ResponseEntity create(Member member) {
         if (member == null)
             return new ResponseEntity<>("Member not created", HttpStatus.NOT_IMPLEMENTED);
-
+        System.out.println(member);
         memberRepository.save(member);
 
         return new ResponseEntity<>(String.format("Member %s Created", member), HttpStatus.OK);
