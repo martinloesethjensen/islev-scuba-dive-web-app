@@ -6,3 +6,7 @@ html, body {
     width: 500px;
     margin: 100px auto;
 }
+
+nav {
+    margin-bottom: 20px;
+}

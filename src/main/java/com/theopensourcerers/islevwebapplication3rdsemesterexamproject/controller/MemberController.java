@@ -21,12 +21,12 @@ public class MemberController {
     @GetMapping("/member/my-information")
     public String myInformatonView(Model model) {
         model.addAttribute("info", memberRepository.findBySessionId(WebSecurityConfig.myId));
-        return "myInformationView";
+        return "member/myInformationView";
     }
 
     @GetMapping("/member/my-information/edit")
     public String myInformatonEdit(Model model) {
         model.addAttribute("info", memberRepository.findBySessionId(WebSecurityConfig.myId));
-        return "myInformationView";
+        return "member/myInformationEdit";
     }
 }
