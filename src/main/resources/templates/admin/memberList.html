@@ -46,6 +46,19 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
+        function updateList() {
+            $.ajax({
+                url: "/api/member/list",
+                success: function (resp) {
+
+                }, error: function (msg) {
+                    console.log(msg)
+                }
+            });
+        }
+
+        window.setInterval(updateList(), 5000);
+
         $(".trigger-delete").click(function () {
             if(confirm("Er du sikker på du vil slette dette medlem?")) {
                 $.ajax({
