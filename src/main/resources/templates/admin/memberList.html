@@ -39,7 +39,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            window.setInterval(function () {
+
+            function ajaxCall() {
                 $.ajax({
                     url: "/api/member/list",
                     success: function (list) {
@@ -64,7 +65,10 @@
                         console.log(msg)
                     }
                 });
-            }, 5000);
+            }
+
+            window.setInterval(ajaxCall(), 5000);
+            ajaxCall();
 
             $("body").on("click", ".trigger-delete", function () {
                 if(confirm("Er du sikker på du vil slette dette medlem?")) {

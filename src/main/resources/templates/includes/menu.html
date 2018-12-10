@@ -22,7 +22,7 @@
             </li>
             <li class="nav-item" th:if="${PREFIX} == '/member'">
                 <a class="nav-link"
-                   th:classappend="${#httpServletRequest.requestURI} == '/member/my-information' ? 'active' : ''"
+                   th:classappend="${#httpServletRequest.requestURI} == '/member/my-information' OR ${#httpServletRequest.requestURI} == '/member/my-information/edit' ? 'active' : ''"
                    href="/member/my-information"> Mine informationer</a>
             </li>
             <li class="nav-item">
