@@ -21,6 +21,21 @@ public class Member {
     public Member() {
     }
 
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", city='" + city + '\'' +
+                ", certificateNumber='" + certificateNumber + '\'' +
+                ", session=" + session +
+                '}';
+    }
+
     public int getId() {
         return id;
     }

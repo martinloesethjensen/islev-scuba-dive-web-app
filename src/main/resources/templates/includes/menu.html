@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="menu" xmlns:th="www.thymeleaf.org">
-    <a class="navbar-brand" href="#"><img class="navbar-brand" src="../img/islevLogo.png" style="width: 80px"/></a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
+    <a class="navbar-brand" href="/"><img class="navbar-brand" src="/../../img/islevLogo.png" style="width: 45px"/></a>
     <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
             class="navbar-toggler"
             data-target="#navbarNavAltMarkup" data-toggle="collapse" type="button">
@@ -8,19 +8,38 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Forside <span class="sr-only">(current)</span></a>
+                <a class="nav-link" th:classappend="${#httpServletRequest.requestURI} == '/' ? 'active' : ''"
+                   href="/">Forside</a>
+            </li>
+            <li class="nav-item" th:if="${PREFIX} == '/admin'">
+                <a class="nav-link"
+                   th:classappend="${#httpServletRequest.requestURI} == '/admin/members/' ? 'active' : ''"
+                   href="/admin/members/">Medlemmer</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/courses/">Kurser</a>
+                <a class="nav-link" th:classappend="${#httpServletRequest.requestURI} == '/courses/' ? 'active' : ''"
+                   href="/courses/">Kurser</a>
+            </li>
+            <li class="nav-item" th:if="${PREFIX} == '/member'">
+                <a class="nav-link"
+                   th:classappend="${#httpServletRequest.requestURI} == '/member/my-information' ? 'active' : ''"
+                   href="/member/my-information"> Mine informationer</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/about">Om Islev Sportsdykkerklub</a>
+                <a class="nav-link" th:classappend="${#httpServletRequest.requestURI} == '/about' ? 'active' : ''"
+                   href="/about">Om Islev Sportsdykkerklub</a>
             </li>
         </ul>
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="/login">Log Ind</a>
+            <li class="nav-item" th:if="!${LOGGED_IN}">
+                <a class="nav-link" th:classappend="${#httpServletRequest.requestURI} == '/login' ? 'active' : ''"
+                   href="/login">Log Ind</a>
             </li>
+            <ul class="navbar-nav">
+                <li class="nav-item" th:if="${LOGGED_IN}">
+                    <a class="nav-link active" href="/login?logout">Log Ud</a>
+                </li>
+            </ul>
         </ul>
     </div>
 </nav>

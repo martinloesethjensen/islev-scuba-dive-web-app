@@ -2,17 +2,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title id="title"></title>
 
     <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" href="../../css/custom.css">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+
 <body>
-<div th:replace="/member/includes/menu::menu"></div>
-hej member
+<div th:replace="/includes/menu::menu"></div>
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4" id="header"></h1>
+        <p class="lead">Lorem ipsum dolor sit amet, duo at aliquam facilis, ad omnis tation gloriatur vix, decore
+            tractatos
+            ex sed.</p>
+        <hr class="my-4"/>
+        <p>Ubique omnesque argumentum nec id, congue feugait ei vel. Ut usu eros consulatu, reque populo id pri. Iriure
+            conceptam adolescens ius te, eum paulo gubergren te. Eos cu tota habemus. Diceret singulis mnesarchum vim
+            et.
+            Ius cetero necessitatibus ad, pri admodum accusamus conceptam ad. Ex eos delenit reprehendunt, id tota
+            feugiat
+            vis.</p>
+    </div>
+</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $.ajax({
+        url: "/api/member/get-current-member",
+        method: "GET",
+        success: function (name) {
+            console.log(name);
+            $("#title").text('Velkommen ' + name.firstname + '!');
+            $("#header").text('Hej ' + name.firstname + '!');
+        }
+    })
+</script>
 </html>
