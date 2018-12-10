@@ -33,9 +33,7 @@ public class MemberController {
 //      ---------------------------------------------------------------------------------------------------------
         model.addAttribute("PREFIX", WebSecurityConfig.getPrefixURL());
         model.addAttribute("LOGGED_IN", WebSecurityConfig.isLoggedIn());
-        model.addAttribute("member", memberRepository.findBySessionId(WebSecurityConfig.getMyId()));
 //      ---------------------------------------------------------------------------------------------------------
-        model.addAttribute("info", memberRepository.findBySessionId(WebSecurityConfig.getMyId()));
         model.addAttribute("success", success);
         success = false;
         return "member/myInformationView";

@@ -22,7 +22,6 @@ public class AdminController {
 //      ---------------------------------------------------------------------------------------------------------
         model.addAttribute("PREFIX", WebSecurityConfig.getPrefixURL());
         model.addAttribute("LOGGED_IN", WebSecurityConfig.isLoggedIn());
-        model.addAttribute("member", memberRepository.findBySessionId(WebSecurityConfig.getMyId()));
 //      ---------------------------------------------------------------------------------------------------------
         return "/admin/index";
     }
@@ -34,9 +33,7 @@ public class AdminController {
 //      ---------------------------------------------------------------------------------------------------------
         model.addAttribute("PREFIX", WebSecurityConfig.getPrefixURL());
         model.addAttribute("LOGGED_IN", WebSecurityConfig.isLoggedIn());
-        model.addAttribute("member", memberRepository.findBySessionId(WebSecurityConfig.getMyId()));
 //      ---------------------------------------------------------------------------------------------------------
-        model.addAttribute("members", memberRepository.findAll());
         model.addAttribute("success", success);
         success = false;
         return "/admin/memberList";
@@ -50,7 +47,7 @@ public class AdminController {
 //      ---------------------------------------------------------------------------------------------------------
         model.addAttribute("PREFIX", WebSecurityConfig.getPrefixURL());
         model.addAttribute("LOGGED_IN", WebSecurityConfig.isLoggedIn());
-        model.addAttribute("member", memberRepository.findBySessionId(WebSecurityConfig.getMyId()));
+        model.addAttribute("member", memberRepository.findByIdEquals(id));
 //      ---------------------------------------------------------------------------------------------------------
         return "/admin/updateMember";
     }

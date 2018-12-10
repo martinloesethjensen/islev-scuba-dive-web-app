@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${member.firstname} + '\'s Informationer'"></title>
+    <title>Mine Informationer</title>
 
     <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" href="../../css/custom.css">
@@ -20,34 +20,34 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <p th:utext="'<b>Fornavn:<br></b>'+${info.firstname}"></p>
+                            <p id="info-firstname"></p>
                         </div>
                         <div class="col-md-6">
-                            <p th:utext="'<b>Efternavn:<br></b>'+${info.lastname}"></p>
+                            <p id="info-lastname"></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <p th:utext="'<b>Adresse:<br></b>'+${info.address}"></p>
+                            <p id="info-address"></p>
                         </div>
                         <div class="col-md-3">
-                            <p th:utext="'<b>Postnummer:<br></b>'+${info.zipcode}"></p>
+                            <p id="info-zipcode"></p>
                         </div>
                         <div class="col-md-3">
-                            <p th:utext="'<b>By:<br></b>'+${info.city}"></p>
+                            <p id="info-city"></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <p th:utext="'<b>Telefonnummer:<br></b>'+${info.phone}"></p>
+                            <p id="info-phone"></p>
                         </div>
                         <div class="col-md-6">
-                            <p th:utext="'<b>Dykker Certifikat Nummer:<br></b>'+${info.certificateNumber}"></p>
+                            <p id="info-certificate"></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <p th:utext="'<b>Email (Brugernavn):<br></b>'+${info.session.username}"></p>
+                            <p id="info-username"></p>
                         </div>
                         <div class="col-md-6">
                             <p th:utext="'<b>Adgangskode:<br></b><i>Skjult</i>'"></p>
@@ -64,4 +64,22 @@
     </div>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $.ajax({
+        url: "/api/member/get-current-member",
+        method: "GET",
+        success: function (member) {
+            console.log(member);
+            $("#info-firstname").html('<b>Fornavn:<br></b>' + member.firstname);
+            $("#info-lastname").html('<b>Efternavn:<br></b>' + member.lastname);
+            $("#info-address").html('<b>Adresse:<br></b>' + member.address);
+            $("#info-zipcode").html('<b>Postnummer:<br></b>' + member.zipcode);
+            $("#info-city").html('<b>By:<br></b>' + member.city);
+            $("#info-phone").html('<b>Telefonnummer:<br></b>' + member.phone);
+            $("#info-certificate").html('<b>Dykker Certifikat Nummer:<br></b>' + member.certificateNumber);
+            $("#info-username").html('<b>Email (Brugernavn):<br></b>' + member.session.username);
+        }
+    })
+</script>
 </html>

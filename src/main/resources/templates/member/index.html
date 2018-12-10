@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Velkommen ' + ${member.firstname} + '!'"></title>
+    <title id="title"></title>
 
     <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" href="../../css/custom.css">
@@ -11,7 +11,7 @@
 <div th:replace="/includes/menu::menu"></div>
 <div class="container">
     <div class="jumbotron">
-        <h1 class="display-4" th:text="'Hej, ' + ${member.firstname} + '!'"></h1>
+        <h1 class="display-4" id="header"></h1>
         <p class="lead">Lorem ipsum dolor sit amet, duo at aliquam facilis, ad omnis tation gloriatur vix, decore
             tractatos
             ex sed.</p>
@@ -25,4 +25,16 @@
     </div>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $.ajax({
+        url: "/api/member/get-current-member",
+        method: "GET",
+        success: function (name) {
+            console.log(name);
+            $("#title").text('Velkommen ' + name.firstname + '!');
+            $("#header").text('Hej ' + name.firstname + '!');
+        }
+    })
+</script>
 </html>

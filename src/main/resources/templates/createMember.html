@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret medlem</title>
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/bootstrap-grid.css" rel="stylesheet">
-    <link href="../css/bootstrap-reboot.css" rel="stylesheet">
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+    <link href="../../css/custom.css" rel="stylesheet">
     <script src="../js/bootstrap.js"></script>
     <script src="../js/bootstrap.bundle.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 <body>
+
+<div th:replace="/includes/menu::menu"></div>
 
 <div class="row">
     <div class="col-2"></div>
@@ -117,13 +117,14 @@
                     </div>
                 </form>
                 </p>
-                <button class="btn btn-danger">Tilbage</button>
+                <a class="btn btn-danger" href="/">Tilbage</a>
                 <button class=" btn btn-success float-right" id="saveBtn">Gem</button>
             </div>
         </div>
     </div>
     <div class="col-2"></div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $("#saveBtn").click(function () {
         $.ajax({
@@ -140,7 +141,6 @@
             }
         });
     });
-
 </script>
 </body>
 </html>

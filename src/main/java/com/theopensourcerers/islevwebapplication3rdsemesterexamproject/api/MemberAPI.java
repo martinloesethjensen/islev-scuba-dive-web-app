@@ -1,7 +1,6 @@
 
 package com.theopensourcerers.islevwebapplication3rdsemesterexamproject.api;
 
-import com.google.api.Http;
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.authentication.WebSecurityConfig;
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.base.Member;
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.controller.AdminController;
@@ -11,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/member")
@@ -41,13 +37,19 @@ public class MemberAPI {
         if (member == null)
             return new ResponseEntity<>("Member not updated", HttpStatus.NOT_IMPLEMENTED);
 
-	    member.getSession().setRole("MEMBER");
+	    member.getSession().setRole(memberRepository.findBySessionId(WebSecurityConfig.getMyId()).getSession().getRole());
 	    memberRepository.save(member);
 
 	    MemberController.success = true;
 
         return new ResponseEntity<>(String.format("Member %s Updated", member), HttpStatus.OK);
     }
+
+	@GetMapping("/get-current-member")
+	public ResponseEntity<Member> getCurrentMember() {
+		Member member = memberRepository.findBySessionId(WebSecurityConfig.getMyId());
+		return new ResponseEntity<>(member, HttpStatus.OK);
+	}
 
     @DeleteMapping("delete")
     public ResponseEntity delete(Integer id) {
