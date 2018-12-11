@@ -32,5 +32,10 @@ public class HomeController {
 		return "createMember";
 	}
 
+	@GetMapping("test")
+	public String test(){
+		return "test";
+	}
+
 
 }
