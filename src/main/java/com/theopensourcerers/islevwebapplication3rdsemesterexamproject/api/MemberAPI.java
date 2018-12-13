@@ -19,7 +19,7 @@ public class MemberAPI {
     MemberRepository memberRepository;
 
     @GetMapping("list")
-    public ResponseEntity list() { return new ResponseEntity<>(memberRepository.findAll(), HttpStatus.OK); }
+    public ResponseEntity list() { return new ResponseEntity<>(memberRepository.findAllBySessionRole("MEMBER"), HttpStatus.OK); }
 
     //    TODO: validate postal code and phone number.
 	@PostMapping("create")

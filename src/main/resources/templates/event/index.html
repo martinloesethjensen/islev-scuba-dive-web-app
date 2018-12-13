@@ -10,6 +10,10 @@
     <script src="../js/bootstrap.bundle.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <!--Selectize libary-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.js"></script>
 
 </head>
 <body>
@@ -17,14 +21,53 @@
 <div th:replace="/includes/menu::menu"></div>
 
 <div class="row">
-    <div class="col-2"></div>
-    <div class="col-8">
+    <div class="col-1"></div>
+    <div class="col-7">
 
         <iframe style="border: 0;"
                 src="https://www.google.com/calendar/embed?src=eiqmqs1fkspvds5angp010uupc%40group.calendar.google.com&amp;ctz=Europe/Copenhagen"
                 height="600" width="100%" frameborder="0" scrolling="no" kwframeid="1"></iframe>
     </div>
-    <div class="col-2"></div>
+    <div class="col-3 mt-5">
+
+        <div>
+            <p style="margin: 0"> Dato for begivenhed</p>
+            <input class="mb-2" id="date" type="datetime-local" style="width: 100%">
+            <br>
+            <textarea placeholder="Besked.." style="width: 100%; height: 100px"></textarea>
+
+            <div>
+                <p style="margin: 0;">Tilføj personer der skal have en notifikation </p>
+                <select class="form-control pickerSelectClass selectize-dropdown " style="width: 90%;" id="members"
+                        name="members">
+                </select>
+            </div>
+
+        </div>
+        <button id="smsbtn" class="btn btn-success float-right" style="margin-top: 100px">Send SMS</button>
+
+    </div>
+    <div class="col-1"></div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
 <style>
     .view-cap, .view-container-border {
@@ -40,5 +83,53 @@
         color: white;
     }
 </style>
+<script>
+  $('#smsbtn').on('shown.bs.modal', function () {
+    $('#exampleModal').trigger('focus')
+  })
+</script>
+
+<script>
+  $.ajax({
+    url: '/api/member/list',
+    type: 'GET',
+
+    error: function (err) {
+      console.log(err);
+    },
+
+    success: function (options) {
+      console.log(options);
+      $('#members').selectize({
+        persist: true,
+        searchField: ['firstname', 'lastname', 'id'],
+        valueField: 'id',
+        labelField: 'firstname',
+        maxItems: null,
+        preload: true,
+        items: options,
+        options: options,
+        create: false,
+        plugins: ['remove_button'],
+        render: {
+          option: function (item, escape) {
+            return '<div style="padding-left: 5px">'
+              + escape(item.firstname)
+              + ' '
+              + escape(item.lastname)
+              + '</div>'
+          },
+          item: function (item, escape) {
+            return '<div>'
+              + escape(item.firstname)
+              + ' '
+              + escape(item.lastname)
+              + '</div>'
+          }
+        }
+      });
+    }
+  });
+</script>
 </body>
 </html>
