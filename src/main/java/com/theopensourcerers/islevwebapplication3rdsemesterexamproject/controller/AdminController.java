@@ -1,6 +1,8 @@
 package com.theopensourcerers.islevwebapplication3rdsemesterexamproject.controller;
 
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.authentication.WebSecurityConfig;
+import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.base.Course;
+import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.repository.CourseRepository;
 import com.theopensourcerers.islevwebapplication3rdsemesterexamproject.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,9 @@ public class AdminController {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
 
     @GetMapping("/admin/")
     public String adminMemberList(Model model) {
@@ -50,5 +55,42 @@ public class AdminController {
         model.addAttribute("member", memberRepository.findByIdEquals(id));
 //      ---------------------------------------------------------------------------------------------------------
         return "/admin/updateMember";
+    }
+
+    @GetMapping("/admin/courses/")
+    public String coursesList(Model model) {
+//      ---------------------------------------------------------------------------------------------------------
+//     | For menu (nav bar):                                                                                     |
+//      ---------------------------------------------------------------------------------------------------------
+        model.addAttribute("PREFIX", WebSecurityConfig.getPrefixURL());
+        model.addAttribute("LOGGED_IN", WebSecurityConfig.isLoggedIn());
+//      ---------------------------------------------------------------------------------------------------------
+        model.addAttribute("success", success);
+        success = false;
+        return "/admin/coursesList";
+    }
+
+    @GetMapping("/admin/courses/create")
+    public String courseCreate(Model model) {
+//      ---------------------------------------------------------------------------------------------------------
+//     | For menu (nav bar):                                                                                     |
+//      ---------------------------------------------------------------------------------------------------------
+        model.addAttribute("PREFIX", WebSecurityConfig.getPrefixURL());
+        model.addAttribute("LOGGED_IN", WebSecurityConfig.isLoggedIn());
+//      ---------------------------------------------------------------------------------------------------------
+        model.addAttribute("course", new Course());
+        return "/admin/coursesCreate";
+    }
+
+    @GetMapping("/admin/courses/edit/{id}")
+    public String courseEdit(Model model, @PathVariable("id") Integer id) {
+//      ---------------------------------------------------------------------------------------------------------
+//     | For menu (nav bar):                                                                                     |
+//      ---------------------------------------------------------------------------------------------------------
+        model.addAttribute("PREFIX", WebSecurityConfig.getPrefixURL());
+        model.addAttribute("LOGGED_IN", WebSecurityConfig.isLoggedIn());
+//      ---------------------------------------------------------------------------------------------------------
+        model.addAttribute("course", courseRepository.findById(id));
+        return "/admin/coursesUpdate";
     }
 }
