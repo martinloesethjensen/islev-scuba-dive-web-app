@@ -28,4 +28,24 @@ public class CoursesAPI {
 
         return new ResponseEntity<>(String.format("Course %s Created", course), HttpStatus.OK);
     }
+
+    @PutMapping("update")
+    public ResponseEntity update(Course course) {
+        if (course == null)
+            return new ResponseEntity<>("Course not created", HttpStatus.NOT_IMPLEMENTED);
+        AdminController.success = true;
+        courseRepository.save(course);
+
+        return new ResponseEntity<>(String.format("Course %s Updated", course), HttpStatus.OK);
+    }
+
+    @DeleteMapping("delete")
+    public ResponseEntity delete(Course course) {
+        if (course == null)
+            return new ResponseEntity<>("Course not deleted", HttpStatus.NOT_IMPLEMENTED);
+        AdminController.success = true;
+        courseRepository.delete(course);
+
+        return new ResponseEntity<>(String.format("Course %s Deleted", course), HttpStatus.OK);
+    }
 }
