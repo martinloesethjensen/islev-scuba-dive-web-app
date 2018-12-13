@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/member/*").access("hasAnyAuthority('ROLE_MEMBER')")
                 .antMatchers("/admin/*").access("hasAnyAuthority('ROLE_ADMIN')")
-                .antMatchers("/login", "/css/**", "/js/**", "/img/**", "/register", "/api/**", "/", "/courses/", "/about", "/event").permitAll()
+                .antMatchers("/login", "/css/**", "/js/**", "/img/**", "/register", "/api/**", "/", "/courses", "/about", "/event").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -70,7 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .addLogoutHandler(customLogoutSuccessHandler())
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
 
     @Bean
@@ -90,6 +93,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(users);
     }
 
+    @Bean
+    public CustomLogoutSuccessHandler customLogoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
+    }
+
     public static String getPrefixURL() {
         return prefix;
     }
@@ -97,4 +105,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static int getMyId() { return myId; }
 
 	public static boolean isLoggedIn() { return isLoggedIn; }
+
+    public static void setPrefix(String prefix) {
+        WebSecurityConfig.prefix = prefix;
+    }
+
+    public static void setMyId(int myId) {
+        WebSecurityConfig.myId = myId;
+    }
+
+    public static void setIsLoggedIn(boolean isLoggedIn) {
+        WebSecurityConfig.isLoggedIn = isLoggedIn;
+    }
 }

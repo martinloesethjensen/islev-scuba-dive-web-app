@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Islev Scubadive | Opret kursus</title>
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="/includes/menu::menu"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form id="formID">
+                        <input th:field="${course.id}" type="hidden">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Navn på kursus</label>
+                                    <input th:field="${course.name}" type="text"
+                                           class="form-control"
+                                           id="name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="start_date">Start dato:</label>
+                                    <input th:field="${course.start_date}" type="date" class="form-control"
+                                           id="start_date">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="end_date">Slut dato:</label>
+                                    <input id="end_date" class="form-control" th:field="${course.end_date}"
+                                           type="date">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <div class="col-md-1">
+                                <input th:field="${course.monday}" type="checkbox" />Mandag
+                            </div>
+                            <div class="col-md-1">
+                                <input th:field="${course.tuesday}" type="checkbox" />Tirsdag
+                            </div>
+                            <div class="col-md-1">
+                                <input th:field="${course.wednesday}" type="checkbox" />Onsdag
+                            </div>
+                            <div class="col-md-1">
+                                <input th:field="${course.thursday}" type="checkbox" />Torsdag
+                            </div>
+                            <div class="col-md-1">
+                                <input th:field="${course.friday}" type="checkbox" />Fredag
+                            </div>
+                            <div class="col-md-1">
+                                <input th:field="${course.saturday}" type="checkbox" />Lørdag
+                            </div>
+                            <div class="col-md-1">
+                                <input th:field="${course.sunday}" type="checkbox" />Søndag
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="start_time">Start tidspunkt:</label>
+                                    <input th:field="${course.start_time}" type="time" class="form-control"
+                                           id="start_time">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="end_time">Slut tidspunkt:</label>
+                                    <input id="end_time" class="form-control" th:field="${course.end_time}"
+                                           type="time">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="desc">Beskrivelse:</label>
+                                    <textarea
+                                            class="form-control"
+                                            id="desc"
+                                            th:field="${course.description}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <a class="btn btn-danger" href="/admin/courses/">Tilbage</a>
+                    <button class=" btn btn-success float-right" id="saveBtn">Gem</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $("#saveBtn").click(function () {
+        $.ajax({
+            url: '/../api/courses/update',
+            type: 'put',
+            data: $("#formID").serialize(),
+            error: function (err) {
+                console.log(err.responseText);
+            },
+            success: function (options) {
+                console.log(options);
+                window.location.href = "/admin/courses/";
+
+            }
+        });
+    });
+</script>
+</body>
+</html>
