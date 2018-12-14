@@ -33,4 +33,11 @@ public class HomeController {
 		model.addAttribute("member", new Member());
 		return "createMember";
 	}
+
+	@GetMapping("training")
+	public String training(Model model){
+		model.addAttribute("PREFIX", WebSecurityConfig.getPrefixURL());
+		model.addAttribute("LOGGED_IN", WebSecurityConfig.isLoggedIn());
+		return "training/index";
+	}
 }

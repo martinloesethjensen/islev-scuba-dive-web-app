@@ -8,5 +8,5 @@ import java.util.List;
 public interface MemberRepository extends CrudRepository<Member, Integer> {
     Member findByIdEquals(Integer id);
     Member findBySessionId(Integer id);
-    List<Member> findAll();
+    List<Member> findAllBySessionRole(String role);
 }
