@@ -57,7 +57,7 @@ public class AdminController {
         return "/admin/updateMember";
     }
 
-    @GetMapping("/admin/courses/")
+    @GetMapping("/admin/courses")
     public String coursesList(Model model) {
 //      ---------------------------------------------------------------------------------------------------------
 //     | For menu (nav bar):                                                                                     |
